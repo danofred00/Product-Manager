@@ -1,12 +1,16 @@
-import { Link } from 'expo-router';
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
-const ExploreScreen = () => {
+const WelcomeScreen = () => {
+
+  const router = useRouter();
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome Page</Text>
-      <Link href="/(tabs)" style={styles.link}>Go to home</Link>
+      <Button title="Go to Home" onPress={() => router.navigate('/(tabs)/')} />
     </View>
   );
 };
@@ -16,14 +20,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 10
   },
   text: {
     fontSize: 20,
   },
-  link: {
-    fontSize: 15,
-    color: 'blue',
-  }
 });
 
-export default ExploreScreen;
+export default WelcomeScreen;
