@@ -1,10 +1,12 @@
+import { Link } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const HomePage = () => {
+const ExploreScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Accueil</Text>
+      <Text style={styles.text}>Welcome Page</Text>
+      <Link href="/(tabs)" style={styles.link}>Go to home</Link>
     </View>
   );
 };
@@ -14,12 +16,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
   },
   text: {
     fontSize: 20,
-    color: '#333',
   },
+  link: {
+    fontSize: 15,
+    color: 'blue',
+  }
 });
 
-export default HomePage;
+export default ExploreScreen;

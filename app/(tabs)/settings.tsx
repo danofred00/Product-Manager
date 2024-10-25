@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const HomePage = () => {
+const ExploreScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Accueil</Text>
+      <Text style={styles.text}>Parametres</Text>
     </View>
   );
 };
@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: '#333',
+    fontWeight: 'bold',
   },
 });
 
-export default HomePage;
+export default ExploreScreen;
