@@ -4,6 +4,7 @@ import { Stack, useNavigation } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { StoreProvider } from '@/features/store'
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -29,11 +30,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(root)" options={{headerShown: false}}/>
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <StoreProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(root)" options={{headerShown: false}}/>
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </StoreProvider>
     </ThemeProvider>
   );
 }

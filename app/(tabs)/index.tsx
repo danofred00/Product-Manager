@@ -9,6 +9,9 @@ import Animated from 'react-native-reanimated';
 import { DeliveryProduct } from '@/types';
 import AvailableProductList from '@/components/products/AvaliableProductList';
 import { ProductService } from '@/services/products.service';
+import { fullname } from '@/lib/utils';
+import { useSelector } from 'react-redux';
+import { userSelector } from '@/features/store';
 
 const userAvatar = require('@/assets/images/avatars/default.png')
 
@@ -22,6 +25,7 @@ const HomePage = () => {
               avalivableProducts : 
               avalivableProducts.filter((product) => product.name.toLowerCase().includes(filter.toLowerCase()))
   }, [avalivableProducts, filter])
+  const user = useSelector(userSelector)
 
   useEffect(() => {
     ProductService.getProducts().then((products) => setAvalivableProducts(products))
@@ -35,7 +39,7 @@ const HomePage = () => {
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
             <View style={{gap: 3}}>
               <ThemedText type='defaultSemiBold' lightColor='white'>Hello</ThemedText>
-              <ThemedText type='title' lightColor='white' >John Doe</ThemedText>
+              <ThemedText type='title' lightColor='white' >{fullname(user)}</ThemedText>
             </View>
             <Image source={userAvatar} style={styles.avatar} />
           </View>

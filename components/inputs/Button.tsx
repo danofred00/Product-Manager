@@ -1,0 +1,43 @@
+
+import { Colors } from "@/constants/Colors"
+import {
+    ButtonProps as RNButtonProps, 
+    StyleProp, 
+    StyleSheet, 
+    Text, 
+    TouchableOpacity,
+    ViewStyle
+} from "react-native"
+
+export type ButtonProps = RNButtonProps & {
+    style?: StyleProp<ViewStyle>
+}
+
+export default function Button({title, style, ...props}: ButtonProps)
+{
+    return (
+        <TouchableOpacity style={[styles.container, style]} activeOpacity={0.8} {...props}>
+            <Text style={styles.text}>{title}</Text>
+        </TouchableOpacity>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        gap: 10,
+        backgroundColor: Colors.light.tabIconSelected,
+        padding: 15,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 1
+    }, 
+    text: {
+        textAlign: 'center',
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#fff'
+    }
+})

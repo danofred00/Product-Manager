@@ -1,4 +1,11 @@
 
+export type User = {
+    firstname: string,
+    lastname: string,
+    image: string,
+    description?: string
+}
+
 export type Product = {
     id: string | number,
     name: string,

@@ -13,16 +13,17 @@ export default function TabLayout() {
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-            headerShown: false,
+            headerShown: true,
           }}>
           
           <Tabs.Screen name="index" options={{
             title: "Accueil",
+            headerShown: false,
             tabBarIcon: ({ color }) => <MaterialIcons name="home" size={24} color={color} />,
           }}/>
           
           <Tabs.Screen name="sells" options={{
-            title: "Ventes",
+            title: "Mes Ventes",
             tabBarIcon: ({ color }) => <MaterialIcons name="sell" size={24} color={color} />,
           }}/>
           
@@ -32,7 +33,7 @@ export default function TabLayout() {
           }}/>
           
           <Tabs.Screen name="products" options={{
-            title: "Produits",
+            title: "Mes Produits",
             tabBarIcon: ({ color }) => <MaterialIcons name="shopping-cart" size={24} color={color} />,
           }}/>
           
