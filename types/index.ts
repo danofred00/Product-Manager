@@ -1,19 +1,12 @@
+import { InferType } from 'yup'
+import { productSchema, userSchema } from "./schemas"
 
-export type User = {
-    firstname: string,
-    lastname: string,
+export type User = InferType<typeof userSchema> & {
     image: string,
-    description?: string
 }
 
-export type Product = {
-    id: string | number,
-    name: string,
-    description?: string,
-    color?: string
-    price: number,
-    state: 'available' | 'unavailable',
-    image: string
+export type Product = InferType<typeof productSchema> & {
+    timestamp: number
 }
 
 export type DeliveryProduct = Product & {

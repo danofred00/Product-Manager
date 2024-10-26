@@ -3,9 +3,14 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import useBootstrapApplication from '@/hooks/actions/useBootstrapApplication';
+import { useStore } from '@/hooks/useStore';
 
 export default function TabLayout() {
+  useBootstrapApplication()
   const colorScheme = useColorScheme();
+  const { products } = useStore()
+
 
   return (
     <SafeAreaProvider>
@@ -34,6 +39,7 @@ export default function TabLayout() {
           
           <Tabs.Screen name="products" options={{
             title: "Mes Produits",
+            tabBarBadge: products.length === 0 ? undefined : products.length,
             tabBarIcon: ({ color }) => <MaterialIcons name="shopping-cart" size={24} color={color} />,
           }}/>
           

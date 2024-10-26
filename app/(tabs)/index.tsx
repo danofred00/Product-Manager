@@ -12,8 +12,8 @@ import { ProductService } from '@/services/products.service';
 import { fullname } from '@/lib/utils';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/features/store';
+import UserAvatar from '@/components/UserAvatar';
 
-const userAvatar = require('@/assets/images/avatars/default.png')
 
 const HomePage = () => {
 
@@ -28,7 +28,7 @@ const HomePage = () => {
   const user = useSelector(userSelector)
 
   useEffect(() => {
-    ProductService.getProducts().then((products) => setAvalivableProducts(products))
+    ProductService.getDeliveryProducts().then((products) => setAvalivableProducts(products))
     .finally(() => setLoading(false))
   }, [])
 
@@ -41,7 +41,7 @@ const HomePage = () => {
               <ThemedText type='defaultSemiBold' lightColor='white'>Hello</ThemedText>
               <ThemedText type='title' lightColor='white' >{fullname(user)}</ThemedText>
             </View>
-            <Image source={userAvatar} style={styles.avatar} />
+            <UserAvatar uri={user.image} size={50} radius={25} style={{padding: 1}}/>
           </View>
           <View style={styles.inputContainer}>
             <TextInput 
@@ -99,12 +99,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     minHeight: 200,
     height: '100%'
-  },
-  avatar: {
-    width: 50, 
-    height: 50, 
-    borderRadius: 50, 
-    borderWidth: 1
   },
   inputContainer: {
     backgroundColor: '#fff',

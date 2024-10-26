@@ -1,10 +1,10 @@
-import { StyleProp, StyleSheet, Text, TextInput, TextInputProps, TextStyle, View } from "react-native";
+import { StyleProp, StyleSheet, TextInput, TextInputProps, TextStyle, View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 
 export type InputTextProps = TextInputProps & {
     label?: string,
-    inputStyle?: StyleProp<TextStyle>
+    inputStyle?: StyleProp<TextStyle>,
 }
 
 export default function InputText({label, style, inputStyle, ...props}: InputTextProps)

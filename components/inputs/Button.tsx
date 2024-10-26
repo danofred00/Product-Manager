@@ -1,5 +1,6 @@
 
 import { Colors } from "@/constants/Colors"
+import { ReactNode } from "react"
 import {
     ButtonProps as RNButtonProps, 
     StyleProp, 
@@ -10,13 +11,15 @@ import {
 } from "react-native"
 
 export type ButtonProps = RNButtonProps & {
-    style?: StyleProp<ViewStyle>
+    style?: StyleProp<ViewStyle>,
+    icon?: ReactNode
 }
 
-export default function Button({title, style, ...props}: ButtonProps)
+export default function Button({title, style, icon, ...props}: ButtonProps)
 {
     return (
         <TouchableOpacity style={[styles.container, style]} activeOpacity={0.8} {...props}>
+            {icon}
             <Text style={styles.text}>{title}</Text>
         </TouchableOpacity>
     )

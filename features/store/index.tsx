@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { store } from "./configureStore";
 import { userReducer, userSelector, userSlice } from "./user.store";
+import { productsSlice, productsReducer, productsSelector } from "./products.store";
 import { Provider } from "react-redux";
 
 function StoreProvider({children}: PropsWithChildren)
@@ -13,13 +14,18 @@ function StoreProvider({children}: PropsWithChildren)
 }
 
 store.subscribe(() => {
-    console.log("[+] Saving state : ", store.getState())
+    console.log("[+] Changing state : ", store.getState())
 })
 
 export {
     store,
+    StoreProvider,
+    // User
     userSlice,
     userReducer,
     userSelector,
-    StoreProvider,
+    // Product
+    productsSlice,
+    productsReducer,
+    productsSelector
 }

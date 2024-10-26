@@ -31,7 +31,13 @@ export default function ({ config }: ConfigContext): ExpoConfig {
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          photosPermission: "PERMISSION"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

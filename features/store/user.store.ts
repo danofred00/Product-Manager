@@ -23,7 +23,7 @@ export const userSlice = createSlice({
         setDescription: (state, {payload}) => {
             return {...state, description: payload}
         },
-        setUser: (state, {payload}) => {
+        setUser: (_, {payload}) => {
             return {...payload}
         }
     }
@@ -33,4 +33,4 @@ export const { setName, setDescription, setImage, setUser } = userSlice.actions
 
 export const userReducer = userSlice.reducer
 
-export const userSelector = (state: any) => state.user
+export const userSelector = (state: any) => state.user as User
