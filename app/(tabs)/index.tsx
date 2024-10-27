@@ -1,36 +1,32 @@
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
-import { MaterialIcons } from '@expo/vector-icons';
 import React, { useEffect, useMemo } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { DeliveryProduct } from '@/types';
 import AvailableProductList from '@/components/products/AvaliableProductList';
 import { ProductService } from '@/services/products.service';
 import { fullname } from '@/lib/utils';
-import { useSelector } from 'react-redux';
-import { userSelector } from '@/features/store';
 import UserAvatar from '@/components/UserAvatar';
 import InputSearch from '@/components/InputSearch';
+import useAccountActions from '@/hooks/actions/useAccountActions';
 
 
 const HomePage = () => {
 
   const [avalivableProducts, setAvalivableProducts] = React.useState<DeliveryProduct[]>([])
-  const [loading, setLoading] = React.useState<boolean>(true)
   const [filter, setFilter] = React.useState<string>('')
   const products = useMemo(() => {
     return filter.length === 0 ? 
               avalivableProducts : 
               avalivableProducts.filter((product) => product.name.toLowerCase().includes(filter.toLowerCase()))
   }, [avalivableProducts, filter])
-  const user = useSelector(userSelector)
+  const {user} = useAccountActions()
 
   useEffect(() => {
     ProductService.getDeliveryProducts().then((products) => setAvalivableProducts(products))
-    .finally(() => setLoading(false))
   }, [])
 
   return (

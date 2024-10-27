@@ -2,7 +2,9 @@ import Container from '@/components/Container';
 import ImagePicker from '@/components/ImagePicker';
 import { Button, InputForm } from '@/components/inputs';
 import UserAvatar from '@/components/UserAvatar';
+import useAccountActions from '@/hooks/actions/useAccountActions';
 import { useStore } from '@/hooks/useStore';
+import { myAlert } from '@/lib/alert';
 import { userSchema } from '@/types/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
@@ -11,26 +13,20 @@ import { View, Text, StyleSheet, Platform, Alert } from 'react-native';
 
 function SettingScreen ()
 {
-  const {user, setUser} = useStore()
+  const {user, updateAccount} = useAccountActions()
   const {control, handleSubmit} = useForm({
     resolver: yupResolver(userSchema)
   })
   const [image, setImage] = useState(user.image)
 
-  const updateProfile = (data: any) => {
-    Alert.alert(
-      "Mise a jour effectuer",
-      "Votre profil a ete mis a jours avec success",
-      [
-        {text: "Ok", isPreferred: true}
-      ]
-    )
-
-    if(Platform.OS === 'web') {
-      alert("Profil mis a jour avec success")
-    }
-
-    setUser({...data, image})
+  const updateProfile = async (data: any) => {
+    await updateAccount({...data, image}).then(() => {
+      myAlert({
+        title: "Mise a jour effectue",
+        message: "Votre profil a ete mis a jours avec success",
+        actionText: "Ok"
+      })
+    })
   }
 
   return (
@@ -62,7 +58,7 @@ function SettingScreen ()
               placeholder='Votre prenom' 
               name='lastname'
               control={control}
-              defaultValue={user.lastname}
+              defaultValue={user.lastname ?? ''}
             />
 
             <InputForm

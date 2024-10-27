@@ -29,12 +29,12 @@ function ProductsScreen() {
     return newProducts
   }, [products, currentTag, search])
   const counts = useMemo(() => {
-    const counts = [productFiltered.length]
+    const counts = [products.length]
     for(const tag of [...TAGS].slice(1)) {
-      counts.push(productFiltered.filter(p => p.state?.toLowerCase() === tag.value.toLowerCase()).length)
+      counts.push(products.filter(p => p.state?.toLowerCase() === tag.value.toLowerCase()).length)
     }
     return counts
-  }, [productFiltered])
+  }, [products])
 
   const onProductPressed = (product: Product) => {
     router.push(`/products/${product.id}`)

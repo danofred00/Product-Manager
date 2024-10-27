@@ -14,6 +14,6 @@ export const productSchema = yup.object({
 
 export const userSchema = yup.object({
     firstname: yup.string().min(3).required(),
-    lastname: yup.string().min(3),
+    lastname: yup.string().default(''),
     description: yup.string().max(32),
 })

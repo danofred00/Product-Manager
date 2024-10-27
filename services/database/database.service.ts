@@ -6,29 +6,9 @@ export class DBService
 
     static async createTables(db: SQLiteDatabase)
     {
-        await this.createUserTable(db)
         await this.createDeliveriesTable(db)
         await this.createBillsTable(db)
         await this.createSellsTable(db)
-    }
-
-
-    private static async createUserTable(db: SQLiteDatabase)
-    {
-        console.log('[DBService::createTables] Creating user table')
-
-        const query = `
-            CREATE TABLE IF NOT EXISTS users(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                firstname TEXT NOT NULL,
-                lastname TEXT,
-                description TEXT,
-                image TEXT
-            );
-        `
-        await db.execAsync(query)
-
-        console.log('[DBService::createTables] Done.')
     }
 
     private static async createDeliveriesTable(db: SQLiteDatabase)

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import useProductsActions from "./useProductsActions";
+import useProductsActions from "@/hooks/actions/useProductsActions";
 import useBootstrapDatabase from "./useBootstrapDatabase";
-import useDetectFirstRun from "../useDetectFirstRun";
+import useDetectFirstRun from "@/hooks/useDetectFirstRun";
 
 export default function useBootstrapApplication()
 {

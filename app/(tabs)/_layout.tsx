@@ -3,13 +3,20 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import useBootstrapApplication from '@/hooks/actions/useBootstrapApplication';
+import useBootstrapApplication from '@/hooks/bootstrap/useBootstrapApplication';
 import { useStore } from '@/hooks/useStore';
+import { useEffect } from 'react';
+import useAccountActions from '@/hooks/actions/useAccountActions';
 
 export default function TabLayout() {
   useBootstrapApplication()
   const colorScheme = useColorScheme();
   const { products } = useStore()
+  const { getAccount } = useAccountActions()
+
+  useEffect(() => {
+    getAccount()
+  }, [])
 
 
   return (
