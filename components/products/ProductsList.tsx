@@ -1,5 +1,5 @@
 import { Product } from "@/types"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import ProductCard from "./ProductCard"
 
 export type ProductsListProps = {
@@ -24,6 +24,7 @@ export default function ProductsList({products, onPress}: ProductsListProps)
                         <ProductCard key={index} product={product} onPress={() => onPressCb(product)} />
                     )
                 })}
+                {products.length === 0 && <Text style={{textAlign: 'center', fontSize: 17}}>Aucun produit trouvé</Text>}
             </View>
             <View style={{height: 25}}/>
         </View>

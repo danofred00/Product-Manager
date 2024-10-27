@@ -13,11 +13,18 @@ export default function  useProductsActions()
 
     const addProduct = async (product: Product) => {
         product.id = String(products.length + 1)
-        ProductService.addProduct(product).then(() => add(product))
+        ProductService.addProduct(product).then(() => {
+            refresh()
+        })
     }
 
     const removeProduct = async (id: string) => {
-        ProductService.removeProduct(id).then(() => remove(id))
+        ProductService.removeProduct(id).then((success) => {
+            if(success) {
+                remove(id)
+                refresh()
+            }
+        })
     }
 
     const fetchProducts = async () => {

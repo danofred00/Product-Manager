@@ -4,6 +4,7 @@ import { Button } from '@/components/inputs';
 import useProductsActions from '@/hooks/actions/useProductsActions';
 import { useStore } from '@/hooks/useStore';
 import { myAlert } from '@/lib/alert';
+import { objectEquals } from '@/lib/utils';
 import { Product } from '@/types';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useGlobalSearchParams, useRouter } from 'expo-router';
@@ -21,7 +22,12 @@ const ExploreScreen = () => {
   }, [products])
 
   const onValidate = (data: Product) => {
-    updateProduct(data.id ?? '', data).then(() => {
+
+    if(objectEquals(data, product)) {
+      return;
+    }
+
+    updateProduct(product?.id ?? '' , data).then(() => {
       myAlert({
         message: 'Produit modifier avec success',
         title: 'Produit modifier',

@@ -13,3 +13,8 @@ export type DeliveryProduct = Product & {
     quantity: number,
     timestamp: number
 }
+
+export type Tag = {
+    text: string,
+    value: string
+}

@@ -60,7 +60,7 @@ export default function ProductForm({ defaultValues, onValidate, actionButton, a
                     name="description"
                     label='Description'
                     placeholder='Optional'
-                    defaultValue={defaultValues?.description}
+                    defaultValue={defaultValues?.description ?? ''}
                 />
 
                 <InputForm

@@ -14,7 +14,7 @@ function StoreProvider({children}: PropsWithChildren)
 }
 
 store.subscribe(() => {
-    console.log("[+] Changing state : ", store.getState())
+    console.log("[+] Updating state ")
 })
 
 export {

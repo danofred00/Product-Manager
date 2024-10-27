@@ -13,3 +13,21 @@ export const generateColorPalette = (count: number): string[] => {
     }
     return palette 
 }
+
+export const objectEquals = (a:any , b: any) => {
+    if(typeof a !== typeof b) {
+        return false
+    }
+    let result = true
+
+    if( a instanceof Object ) {
+        for(const key in a) {
+            if(a[key] !== b[key]) {
+                result = false
+                break;
+            }
+        }
+    }
+
+    return result
+}

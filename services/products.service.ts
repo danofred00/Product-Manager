@@ -1,97 +1,36 @@
 import { DeliveryProduct, Product } from "@/types";
+import { ProductRepository } from "./database/repositories/products.repository";
 
 export class ProductService
 {
     static async getDeliveryProducts(): Promise<DeliveryProduct[]>
     {
-        return Promise.resolve([
-            {
-            id: '1',
-            name: 'Pain au lait',
-            price: '100',
-            state: 'avaliable',
-            quantity: 100,
-            timestamp: Date.now() - 1000,
-            image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-            color: '#ff00ff'
-            },
-            {
-            id: '2',
-            name: 'Boule de pain',
-            price: '150',
-            state: 'avaliable',
-            quantity: 25,
-            timestamp: Date.now(),
-            image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-            color: '#ff00ff'
-            },
-            {
-            id: '3',
-            name: 'Pain au lait',
-            price: '50',
-            state: 'avaliable',
-            quantity: 100,
-            timestamp: Date.now() - 10,
-            image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-            color: '#ff00ff'
-            },
-            {
-            id: '4',
-            name: 'Pain ordinaire',
-            price: '100',
-            state: 'avaliable',
-            quantity: 50,
-            timestamp: Date.now() + 123,
-            image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-            color: '#ff00ff'
-            },
-            {
-            id: '5',
-            name: 'Pain ordinaire',
-            price: '150',
-            state: 'avaliable',
-            quantity: 100,
-            timestamp: Date.now() - 523,
-            image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-            color: '#ff00ff'
-            },
-            {
-            id: '6',
-            name: 'Pain ordinaire',
-            price: '50',
-            state: 'avaliable',
-            quantity: 50,
-            timestamp: Date.now() - 100,
-            image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-            color: '#ff00ff'
-            }
-        ])
+        return []
     }
 
     static async getProducts(): Promise<Product[]>
     {
-        return this.getDeliveryProducts()
+        return ProductRepository.getAll()
     }
 
-    static async get(id: string)
+    static async get(id: string): Promise<Product|null>
     {
-        return (await this.getProducts()).filter(p => p.id === id).at(0)    
+        return ProductRepository.get(id)    
     }
 
-    static async addProduct(product: Product): Promise<void>
+    static async addProduct(product: Product): Promise<Product>
     {
-        console.log("[ProductService::addProduct] Adding product : ", product)
+        return ProductRepository.create(product)
     }
 
     
-    static async removeProduct(id: string|number): Promise<void>
+    static async removeProduct(id: string|number): Promise<boolean>
     {
-        console.log("[ProductService::removeProduct] Removing product ", id)
+        return ProductRepository.delete(id)
     }
 
     static async updateProduct(id: string, data: Product): Promise<Product>
     {
-        console.log("[ProductService::updateProduct] Updating product ", id)
-        return data
+        return ProductRepository.update(id, data)
     }
 }

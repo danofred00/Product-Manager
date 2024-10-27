@@ -13,6 +13,7 @@ import { fullname } from '@/lib/utils';
 import { useSelector } from 'react-redux';
 import { userSelector } from '@/features/store';
 import UserAvatar from '@/components/UserAvatar';
+import InputSearch from '@/components/InputSearch';
 
 
 const HomePage = () => {
@@ -43,30 +44,8 @@ const HomePage = () => {
             </View>
             <UserAvatar uri={user.image} size={50} radius={25} style={{padding: 1}}/>
           </View>
-          <View style={styles.inputContainer}>
-            <TextInput 
-              placeholder="Filtrer les produits" 
-              style={{
-                paddingVertical: 5,
-                marginHorizontal: 5,
-                flex: 1,
-                borderWidth: 0,
-                fontSize: 16
-              }}
-              value={filter}
-              onChange={(e) => setFilter(e.nativeEvent.text)}
-            />
-            <TouchableOpacity>
-              <MaterialIcons 
-                name='search' size={28} 
-                color='white'
-                style={{
-                  padding: 5,
-                  backgroundColor: Colors.light.tabIconSelected,
-                  borderRadius: 10
-                }} 
-              />
-            </TouchableOpacity>
+          <View>
+            <InputSearch onTextChange={(text) => setFilter(text)} />
           </View>
         </Animated.View>
         <View style={styles.containerBottom}>
@@ -99,15 +78,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     minHeight: 200,
     height: '100%'
-  },
-  inputContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 3,
-    paddingHorizontal: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
   }
 });
 
