@@ -8,7 +8,7 @@ import useDetectFirstRun from '@/hooks/useDetectFirstRun';
 import { User } from '@/types';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const WelcomeScreen = () => {
@@ -35,14 +35,10 @@ const WelcomeScreen = () => {
   }
 
   return (
-    <Container style={[styles.container, {top: insets.top}]}>
-      <View>
-        <ThemedText type='title'>Bienvenu</ThemedText>
-        <ThemedText style={{textAlign: 'left'}}>
-          Salut, et bienvenu dans mon application de gestion.
-          Pour configurer l'application, j'ai besoin que vous entrez
-          votre nom pour continuer.
-        </ThemedText>
+    <Container style={[{top: insets.top}]}>
+      <View style={styles.container}>
+        <ThemedText type='title' style={{textAlign: 'center'}}>Bienvenu sur Store Manager !</ThemedText>
+        <ThemedText style={styles.text}>Nous avons besoin que vous entrez vos informations pour continuer.</ThemedText>
         <FirstUserForm onValidate={onValidate} />
       </View>
     </Container>
@@ -52,10 +48,11 @@ const WelcomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 10
+    gap: 10,
+    marginTop: 20
   },
   text: {
-    fontSize: 20,
+    textAlign: 'center'
   },
 });
 
