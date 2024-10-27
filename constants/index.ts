@@ -13,3 +13,5 @@ export const kProductTags: Tag[] = [
     {text: 'Disponible', value: 'avaliable'},
     {text: 'Indisponible', value: 'unavaliable'}
 ] 
+
+export const kFirstRunKey = 'first_run'

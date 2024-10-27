@@ -1,18 +1,27 @@
-import { userSelector } from '@/features/store';
-import { fullname } from '@/lib/utils';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import useDetectFirstRun from '@/hooks/useDetectFirstRun';
 import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { useSelector } from 'react-redux';
 
 const WelcomeScreen = () => {
 
   const router = useRouter();
-  const user = useSelector(userSelector)
+  const {loading, isFirstRun} = useDetectFirstRun()
+
+  useEffect(() => {
+    if(!loading && !isFirstRun) {
+      router.replace('/(tabs)/')
+    }
+  }, [loading])
+
+  if (loading || !isFirstRun) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Welcome Page {fullname(user)}</Text>
+      <Text style={styles.text}>Welcome Page</Text>
       <Button title="Go to Home" onPress={() => router.navigate('/(tabs)/')} />
     </View>
   );

@@ -1,15 +1,20 @@
 import { useEffect } from "react";
 import useProductsActions from "./useProductsActions";
 import useBootstrapDatabase from "./useBootstrapDatabase";
+import useDetectFirstRun from "../useDetectFirstRun";
 
 export default function useBootstrapApplication()
 {
-    const { loading } =  useBootstrapDatabase()
+    const {isFirstRun, loading, mutateFirstRun} = useDetectFirstRun()
+    const { setup } =  useBootstrapDatabase()
     const { fetchProducts } = useProductsActions()
 
     useEffect(() => {
         if(!loading) {
-            fetchProducts()
+            setup(isFirstRun).then(async () =>{
+                await fetchProducts()
+                await mutateFirstRun()
+            })
         }
     }, [loading])
 
