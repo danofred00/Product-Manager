@@ -46,7 +46,7 @@ const HomePage = () => {
         </Animated.View>
         <View style={styles.containerBottom}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>Mes Produits actifs</Text>
-          <AvailableProductList products={products} />
+          { /* <AvailableProductList products={products} /> */ }
         </View>
       </Animated.ScrollView>
     </GestureHandlerRootView>

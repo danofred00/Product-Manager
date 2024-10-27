@@ -5,17 +5,18 @@ import { DeliveryProduct } from '@/types';
 
 
 export type AvailableProductListProps = {
-    products: DeliveryProduct[]
+    products: DeliveryProduct[],
+    onDeliveryPressed: (delivery: DeliveryProduct, index: number) => void | Promise<void>
 }
 
-export function AvailableProductList({ products }: AvailableProductListProps) {
+export function AvailableProductList({ products, onDeliveryPressed }: AvailableProductListProps) {
 
     return (
         <View style={styles.container}>
             {products.map((product, index) => {
                 return (
                     <View key={index} style={{marginBottom: 20}}>
-                        <AvaliableProductCard product={product} />
+                        <AvaliableProductCard onPress={(delivery) => onDeliveryPressed(delivery, index) } product={product} />
                     </View>
                 )
             })}

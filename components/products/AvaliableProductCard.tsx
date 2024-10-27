@@ -1,24 +1,31 @@
 import { DeliveryProduct } from "@/types"
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Image } from "expo-image"
+import { useMemo } from "react"
 
 export type AvaliableProductCardProps = {
-    product: DeliveryProduct
+    product: DeliveryProduct,
+    onPress: (delivery: DeliveryProduct) => void | Promise<void>
 }
 
-export function AvaliableProductCard({product}: AvaliableProductCardProps)
+export function AvaliableProductCard({product, onPress}: AvaliableProductCardProps)
 {
+    const time = useMemo(() => {
+        return product.delivery_at
+    }, [product])
+
     return (
-        <TouchableOpacity style={styles.container} activeOpacity={0.85}>
-            <View style={{flexDirection: 'row', gap: 5}} >
+        <TouchableOpacity style={styles.container} activeOpacity={0.85} onPress={() => onPress(product)}>
+            <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}} >
                 <Image source={{uri: product.image}} style={styles.image} contentFit="fill"/>
                 <View>
                     <Text style={styles.productName}>{product.name}</Text>
-                    <Text style={styles.productAmount}>XAF {product.price}</Text>
+                    <Text style={styles.productAmount}>Prix : {product.price} XAF</Text>
+                    <Text style={styles.productAmount}>Livre a : {time}</Text>
                 </View>
             </View>
             <View>
-                <Text style={styles.stockText}>En stock</Text>
+                <Text style={styles.stockText}>Quantite</Text>
                 <Text style={styles.stock}>{product.quantity}</Text>
             </View>
         </TouchableOpacity>

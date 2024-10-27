@@ -1,4 +1,5 @@
 import { productsSelector, userSelector } from "@/features/store"
+import { deliveriesSelector } from "@/features/store/deliveries.store"
 import { addProduct, removeProduct, setProducts } from "@/features/store/products.store"
 import { setUser } from "@/features/store/user.store"
 import { Product, User } from "@/types"
@@ -8,6 +9,7 @@ export function useStore()
 {
     const user = useSelector(userSelector)
     const products = useSelector(productsSelector)
+    const deliveries = useSelector(deliveriesSelector)
     const dispatch = useDispatch()
 
     return {
@@ -16,6 +18,7 @@ export function useStore()
         products,
         setProducts: (products: Product[]) => dispatch(setProducts(products)),
         addProduct: (product: Product) => dispatch(addProduct(product)),
-        removeProduct: (id: string) => dispatch(removeProduct(id))
+        removeProduct: (id: string) => dispatch(removeProduct(id)),
+        deliveries
     }
 }

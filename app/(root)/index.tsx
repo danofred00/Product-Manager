@@ -8,7 +8,7 @@ import useDetectFirstRun from '@/hooks/useDetectFirstRun';
 import { User } from '@/types';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const WelcomeScreen = () => {

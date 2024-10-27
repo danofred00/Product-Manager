@@ -11,7 +11,7 @@ import useAccountActions from '@/hooks/actions/useAccountActions';
 export default function TabLayout() {
   useBootstrapApplication()
   const colorScheme = useColorScheme();
-  const { products } = useStore()
+  const { products, deliveries } = useStore()
   const { getAccount } = useAccountActions()
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export default function TabLayout() {
           
           <Tabs.Screen name="deliveries" options={{
             title: "Livraisons",
+            tabBarBadge: deliveries.length === 0 ? undefined : deliveries.length,
             tabBarIcon: ({ color }) => <MaterialIcons name="delivery-dining" size={24} color={color} />,
           }}/>
           
