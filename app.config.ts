@@ -3,15 +3,15 @@ import { ConfigContext, ExpoConfig } from 'expo/config'
 export default function ({ config }: ConfigContext): ExpoConfig {
   return {
     ...config,
-    "name": "Product Manager",
+    "name": "Store Manager",
     "slug": "product_manager",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,7 +20,7 @@ export default function ({ config }: ConfigContext): ExpoConfig {
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "cm.danofred.product_manager",
@@ -28,7 +28,7 @@ export default function ({ config }: ConfigContext): ExpoConfig {
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
