@@ -57,16 +57,16 @@ const DeliveriesScreen = () => {
             actionText='Editer'
             title='Editer la livraison'
             defaultValue={{
-              delivery_at: deliveries.at(selected)?.delivery_at ?? '',
-              id: deliveries.at(selected)?.id ?? '',
-              product_id: deliveries.at(selected)?.product_id ?? '',
-              quantity: String(deliveries.at(selected)?.quantity),
-              timestamp: deliveries.at(selected)?.timestamp ?? 0,
+              delivery_at: deliveriesFiltered.at(selected)?.delivery_at ?? '',
+              id: deliveriesFiltered.at(selected)?.id ?? '',
+              product_id: deliveriesFiltered.at(selected)?.product_id ?? '',
+              quantity: String(deliveriesFiltered.at(selected)?.quantity),
+              timestamp: deliveriesFiltered.at(selected)?.timestamp ?? 0,
             }}
             onValidate={(data) => { 
               if(selected === undefined)
                 return;
-              const selectedDelivery = deliveries.at(selected)
+              const selectedDelivery = deliveriesFiltered.at(selected)
               if(objectEquals(data, selectedDelivery)) {
                 return;
               }
@@ -84,7 +84,7 @@ const DeliveriesScreen = () => {
                 style={{backgroundColor: '#f00'}} 
                 icon={<MaterialIcons name='delete' size={20} color='#fff' />}
                 onPress={() => {
-                  const selectedDelivery = deliveries.at(selected)
+                  const selectedDelivery = deliveriesFiltered.at(selected)
                   removeDelivery(selectedDelivery?.id as string).then(() => {
                     myAlert({
                       title: 'Livraison supprimer',
