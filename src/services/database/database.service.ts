@@ -7,7 +7,6 @@ export class DBService
     static async createTables(db: SQLiteDatabase)
     {
         await this.createBillsTable(db)
-        await this.createSellsTable(db)
     }
 
     private static async createBillsTable(db: SQLiteDatabase)
@@ -35,35 +34,6 @@ export class DBService
 
         console.log('[DBService::createTables] Creating bills_products table')
         await db.execAsync(billsProductQuery)
-
-        console.log('[DBService::createTables] Done.')
-    }
-
-    private static async createSellsTable(db: SQLiteDatabase)
-    {
-        console.log('[DBService::createTables] Creating sells table')
-
-        const sellsQuery = `
-            CREATE TABLE IF NOT EXISTS sells(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp INTEGER DEFAULT 0
-            )
-        `
-
-        const sellsProductsQuery = `
-            CREATE TABLE IF NOT EXISTS sells_products(
-                sell_id INTEGER NOT NULL,
-                product_id INTEGER NOT NULL,
-                quantity INTEGER DEFAULT 0,
-                FOREIGN KEY(sell_id) REFERENCES sells(id),
-                FOREIGN KEY(product_id) REFERENCES products(id)
-            )
-        `
-
-        await db.execAsync(sellsQuery)
-
-        console.log('[DBService::createTables] Creating sells_products table')
-        await db.execAsync(sellsProductsQuery)
 
         console.log('[DBService::createTables] Done.')
     }

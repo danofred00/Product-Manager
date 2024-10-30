@@ -23,3 +23,10 @@ export const deliverySchema = yup.object({
     quantity: yup.string().required().matches(NUMBER_REGEX, {message: "Invalid number"}),
     delivery_at: yup.string().required().matches(HOUR_REGEX, {message: 'Incorrect Time'})
 })
+
+export const sellSchema = yup.object({
+    id: yup.string().default('0'),
+    product_id: yup.string().required(),
+    quantity: yup.string().required().matches(NUMBER_REGEX, {message: "Invalid number"}),
+    sell_at: yup.string().matches(HOUR_REGEX, {message: 'Incorrect Time'}).nullable()
+})
