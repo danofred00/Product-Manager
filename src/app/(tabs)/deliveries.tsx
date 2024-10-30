@@ -5,7 +5,7 @@ import AvailableProductList from '@/components/products/AvaliableProductList';
 import useDeliveriesActions from '@/hooks/actions/useDeliveriesActions';
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useMemo } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import DeliveryForm from '@/components/forms/DeliveryForm';
 import { myAlert } from '@/lib/alert';
 import { objectEquals } from '@/lib/utils';
@@ -85,13 +85,16 @@ const DeliveriesScreen = () => {
                 icon={<MaterialIcons name='delete' size={20} color='#fff' />}
                 onPress={() => {
                   const selectedDelivery = deliveriesFiltered.at(selected)
-                  removeDelivery(selectedDelivery?.id as string).then(() => {
-                    myAlert({
-                      title: 'Livraison supprimer',
-                      message: 'Livraison supprimer avec succes',
-                      action: () => showEditForm(false)
-                    })
-                })
+                  Alert.alert('Suppression', 'Voulez-vous vraiment supprimer cette livraison ?', [
+                    {text: 'Annuler', onPress: () => {}},
+                    {text: 'Supprimer', onPress: () => {
+                      removeDelivery(selectedDelivery?.id as string).then(() => {
+                        myAlert({
+                          title: 'Livraison supprimer',
+                          message: 'Livraison supprimer avec succes',
+                          action: () => showEditForm(false)
+                        })
+                  })}}])
               }}/>
             } 
           />

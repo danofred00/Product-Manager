@@ -83,7 +83,7 @@ export default function SellsScreen()
                     return;
                   }
                   
-                  Alert.alert("Supprimer la vente", `Voulez-vous vraiment supprimer la vente de ${selectedSell.name} ?`, [
+                  Alert.alert("Supprimer la vente", `Voulez-vous vraiment supprimer la vente de ${selectedSell.name} de ${selectedSell.price} XAF ?`, [
                     {text: 'Annuler', onPress: () => {}},
                     {text: 'Supprimer', onPress: () => {
                       removeSell(selectedSell.id ?? '').then(() => {
