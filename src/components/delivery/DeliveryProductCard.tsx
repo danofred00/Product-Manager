@@ -3,12 +3,12 @@ import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native
 import { Image } from "expo-image"
 import { useMemo } from "react"
 
-export type AvaliableProductCardProps = {
+export type DeliveryProductCardProps = {
     product: DeliveryProduct,
     onPress: (delivery: DeliveryProduct) => void | Promise<void>
 }
 
-export function AvaliableProductCard({product, onPress}: AvaliableProductCardProps)
+export function DeliveryProductCard({product, onPress}: DeliveryProductCardProps)
 {
     const time = useMemo(() => {
         return product.delivery_at

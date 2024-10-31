@@ -1,22 +1,22 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, VirtualizedList } from 'react-native';
-import {AvaliableProductCard} from './AvaliableProductCard';
+import { View, StyleSheet } from 'react-native';
+import {DeliveryProductCard} from './DeliveryProductCard';
 import { DeliveryProduct } from '@/types';
 
 
-export type AvailableProductListProps = {
+export type DeliveryProductListProps = {
     products: DeliveryProduct[],
     onDeliveryPressed: (delivery: DeliveryProduct, index: number) => void | Promise<void>
 }
 
-export function AvailableProductList({ products, onDeliveryPressed }: AvailableProductListProps) {
+export function DeliveryProductList({ products, onDeliveryPressed }: DeliveryProductListProps) {
 
     return (
         <View style={styles.container}>
             {products.map((product, index) => {
                 return (
                     <View key={index} style={{marginBottom: 20}}>
-                        <AvaliableProductCard onPress={(delivery) => onDeliveryPressed(delivery, index) } product={product} />
+                        <DeliveryProductCard onPress={(delivery) => onDeliveryPressed(delivery, index) } product={product} />
                     </View>
                 )
             })}
@@ -31,4 +31,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AvailableProductList;
+export default DeliveryProductList;

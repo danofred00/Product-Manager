@@ -1,7 +1,7 @@
 import Container from '@/components/Container';
 import { Button } from '@/components/inputs';
 import Modal from '@/components/modals/Modal';
-import AvailableProductList from '@/components/products/AvaliableProductList';
+import DeliveryProductList from '@/components/delivery/DeliveryProductList';
 import useDeliveriesActions from '@/hooks/actions/useDeliveriesActions';
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useMemo } from 'react';
@@ -28,7 +28,7 @@ const DeliveriesScreen = () => {
           onPress={() => setVisible(true)}
           icon={<MaterialIcons name='add' size={20} color='#fff'/>}
         />
-        <AvailableProductList products={deliveriesFiltered} onDeliveryPressed={(_, index) => {
+        <DeliveryProductList products={deliveriesFiltered} onDeliveryPressed={(_, index) => {
           setSelected(index)
           showEditForm(true)
         }} />

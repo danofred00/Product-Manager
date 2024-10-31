@@ -31,3 +31,11 @@ export const objectEquals = (a:any , b: any) => {
 
     return result
 }
+
+export const sum = (numbers: number[]): number => {
+    let result = 0
+    for(const n of numbers) {
+        result += n
+    }
+    return result
+}

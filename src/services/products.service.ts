@@ -1,9 +1,9 @@
-import { DeliveryProduct, Product } from "@/types";
+import { Product } from "@/types";
 import { ProductRepository } from "./database/repositories/products.repository";
 
 export class ProductService
 {
-    static async getDeliveryProducts(): Promise<DeliveryProduct[]>
+    static async getAvaliableProducts(): Promise<Product[]>
     {
         return []
     }

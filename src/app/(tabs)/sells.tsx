@@ -5,10 +5,9 @@ import Modal from '@/components/modals/Modal';
 import SellList from '@/components/sells/SellList';
 import useSellActions from '@/hooks/actions/useSellActions';
 import { myAlert } from '@/lib/alert';
-import { SellProduct } from '@/types';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { View, Text, StyleSheet, Alert, } from 'react-native';
+import { View, StyleSheet, Alert, } from 'react-native';
 
 
 export default function SellsScreen()
@@ -17,6 +16,7 @@ export default function SellsScreen()
   const [visible, setVisible] = useState(false)
   const [editFormVisible, showEditForm] = useState(false)
   const [selected, setSelected] = useState<number>(0)
+  const sellsFiltered = [...sells].sort((a, b) => b.timestamp - a.timestamp)
 
   return (
     <Container>
@@ -29,7 +29,7 @@ export default function SellsScreen()
       </View>
       <View>
         <SellList 
-          sells={sells} 
+          sells={sellsFiltered} 
           onPress={(sell) => {
             setSelected(sells.indexOf(sell))
             showEditForm(true)
