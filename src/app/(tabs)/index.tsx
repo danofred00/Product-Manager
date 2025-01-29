@@ -23,7 +23,9 @@ const HomePage = () => {
   const {user} = useAccountActions()
   const {products, totalSales, estimatedTotal} = useResumeProducts({deliveries, sales: sells, products: productsDb})
   const productFiltered = useMemo(() => {
-    return products.filter(({name}) => name.toLowerCase().includes(filter.toLowerCase()))
+    return products.filter(({name}) => {
+      return name.toLowerCase().includes(filter.toLowerCase())
+    }).sort((a, b) => b.sale - a.sale)
   }, [products, filter])
   const router = useRouter()
 

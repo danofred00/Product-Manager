@@ -14,7 +14,7 @@ export default function ReportTable({products, date}: ReportTableProps)
 {
     const {filteredProduct, total} = useMemo(() => {
         let total = 0
-        const filteredProduct = products
+        const filteredProduct = products.filter((p) => p.received)
     
         filteredProduct.forEach(({price, sale}) => total += (sale ?? 0) * parseInt(price))
         return {
