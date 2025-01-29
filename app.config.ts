@@ -16,7 +16,8 @@ export default function ({ config }: ConfigContext): ExpoConfig {
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,  
+      "bundleIdentifier": "cm.danofred.product-manager"
     },
     "android": {
       "adaptiveIcon": {
