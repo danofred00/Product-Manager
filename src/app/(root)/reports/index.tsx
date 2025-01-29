@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import ReportTable from "@/components/ReportTable";
 import { Product } from "@/types";
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 export default function Report()
 {
@@ -18,9 +18,3 @@ export default function Report()
         </Container>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 15
-    }
-})

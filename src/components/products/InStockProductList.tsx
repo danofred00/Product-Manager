@@ -17,6 +17,7 @@ export default function InStockProductList({products, onPress}: InStockProductLi
                         onPress={(p) => onPress ? onPress(p, index) : {}} 
                         product={product} 
                         key={index}
+                        style={{ flex: 1}}
                     />
                 )
             })}

@@ -1,8 +1,7 @@
+import { kDebug } from "@/constants"
 import { DBService } from "@/services/database/database.service"
 import { DatabaseRepository } from "@/services/database/repositories/database.repository"
 import { DatabaseSeeder } from "@/services/database/seeders/database.seeder"
-import { DeliveriesSeeder } from "@/services/database/seeders/deliveries.seeder"
-import { DeliveriesService } from "@/services/deliveries.service"
 import { useSQLiteContext } from "expo-sqlite"
 import { useCallback } from "react"
 
@@ -13,15 +12,15 @@ export default function useBootstrapDatabase()
     const setup = useCallback(async (isFirstRun: boolean) => {
         console.log('[useBootstrapDatabase] Bootstraping database')
 
-        //if(isFirstRun) {
+        if(!isFirstRun && kDebug) {
             await DBService.dropTables(db)
-        //}        
+        }        
         await DatabaseRepository.init(db)
         await DBService.createTables(db)
 
-        //if(isFirstRun) {
+        if(kDebug) {
             await DatabaseSeeder.run(db)
-        //}
+        }
     }, [])
 
     return {

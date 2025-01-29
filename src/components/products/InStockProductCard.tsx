@@ -1,14 +1,15 @@
 import { Product } from "@/types"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-native"
 import UserAvatar from "../UserAvatar"
 import { LinearGradient } from "expo-linear-gradient"
 
 export type InStockProductCardProps = {
     product: Product, 
-    onPress: (product: Product) => void
+    onPress: (product: Product) => void,
+    style?: ViewStyle
 }
 
-export default function InStockProductCard({product, onPress}: InStockProductCardProps)
+export default function InStockProductCard({product, onPress, style}: InStockProductCardProps)
 {
     const {image, inStock, sale, color, name, price, received} = product
     const imageSize = 40
@@ -16,7 +17,7 @@ export default function InStockProductCard({product, onPress}: InStockProductCar
     return (
         <TouchableOpacity 
             activeOpacity={0.99} 
-            style={[styles.container, {borderColor: color, borderWidth: 1}]}
+            style={[styles.container, {borderColor: color, borderWidth: 1}, style]}
             onPress={() => onPress(product)}
         >
             <LinearGradient 
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderRadius: 10,
         minWidth: 150,
-        elevation: 1,
+        elevation: 0,
         gap: 10,
         position: 'relative',
         overflow: 'hidden'

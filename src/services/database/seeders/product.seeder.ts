@@ -1,69 +1,27 @@
-import { Product } from "@/types";
+import { Product, ProductState } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 import { ProductRepository } from "../repositories/products.repository";
-
-const products: Product[] = [
-    {
-        id: '1',
-        name: 'Pain au lait',
-        price: '100',
-        state: 'avaliable',
-        timestamp: Date.now() - 1000,
-        image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-        color: '#ff00ff'
-    },
-    {
-        id: '2',
-        name: 'Boule de pain',
-        price: '150',
-        state: 'avaliable',
-        timestamp: Date.now(),
-        image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-        color: '#ff00ff'
-    },
-    {
-        id: '3',
-        name: 'Pain au lait',
-        price: '50',
-        state: 'avaliable',
-        timestamp: Date.now() - 10,
-        image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-        color: '#ff00ff'
-    },
-    {
-        id: '4',
-        name: 'Pain ordinaire',
-        price: '100',
-        state: 'avaliable',
-        timestamp: Date.now() + 123,
-        image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-        color: '#ff00ff'
-    },
-    {
-        id: '5',
-        name: 'Pain ordinaire',
-        price: '150',
-        state: 'avaliable',
-        timestamp: Date.now() - 523,
-        image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-        color: '#ff00ff'
-    },
-    {
-        id: '6',
-        name: 'Pain ordinaire',
-        price: '50',
-        state: 'avaliable',
-        timestamp: Date.now() - 100,
-        image: 'http://192.168.1.117:8000/uploads/images/products/pain-lait.jpg',
-        color: '#ff00ff'
-    }
-]
 
 export class ProductSeeder
 {
     static async run(db: SQLiteDatabase)
     {
         console.log('[ProductSeeder::run] Seeding products table')
+
+        const response = await fetch(process.env.EXPO_PUBLIC_UGOEAT_API + '/api/v1/products?limit=10')
+        const json = await response.json()
+        const products = Array.from(json.data).map((p: any) => {
+            return {
+                id: p.id,
+                name: p.name,
+                price: p.price,
+                image: p.image_url,
+                description: p.description,
+                color: '#ff00ff',
+                state: p.is_active ? ProductState.AVALIABLE : ProductState.UNAVALIABLE,
+                timestamp: (new Date(p.created_at)).getMilliseconds()
+            }
+        }) as Product[]
 
         try {
             for (const product of products)
