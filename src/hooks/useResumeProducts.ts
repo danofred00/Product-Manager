@@ -1,6 +1,6 @@
 import { ProductStatsService } from "@/services/productstats.service";
 import { Delivery, Product, ProductState, Sell } from "@/types";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export type ResumeProductsOptions = {
     products: Product[],
@@ -8,12 +8,14 @@ export type ResumeProductsOptions = {
     sales: Sell[]
 }
 
-export function useResumeProducts(options: ResumeProductsOptions): Product[]
+export function useResumeProducts(options: ResumeProductsOptions)
 {
     const {products, deliveries, sales} = options
 
-    const resumed = useMemo<Product[]>(() => {
+    const {result, totalSales, estimatedTotal} = useMemo(() => {
         const result = []
+        let totalSales = 0
+        let estimatedTotal = 0
         const statService = new ProductStatsService()
 
         for(const product of products.filter((p) => p.state === ProductState.AVALIABLE)) {
@@ -21,13 +23,22 @@ export function useResumeProducts(options: ResumeProductsOptions): Product[]
             const received = statService.calculateReceived(product.id, deliveries)
             const sale = statService.calculateSale(product.id, sales)
             const inStock = received - sale
-
+            // add a product
             result.push({...product, inStock, sale, received})
+            // update sales amount
+            totalSales += sale
+            estimatedTotal += (sale * parseInt(product.price))
         }
 
-        return result
+        return {
+            result, estimatedTotal, totalSales
+        }
 
     }, [products, deliveries, sales])
 
-    return resumed
+    return {
+        products: result,
+        totalSales,
+        estimatedTotal
+    }
 }

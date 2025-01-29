@@ -34,7 +34,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <MaterialIcons name="home" size={24} color={color} />,
           }}/>
           
-          <Tabs.Screen name="sells" options={{
+          <Tabs.Screen name="sales" options={{
             title: "Mes Ventes",
             tabBarBadge: sells.length === 0 ? undefined : sells.length,
             tabBarIcon: ({ color }) => <MaterialIcons name="sell" size={24} color={color} />,

@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { View, StyleSheet, Alert, } from 'react-native';
 
 
-export default function SellsScreen()
+export default function SalesScreen()
 {
   const { sells, addSell, updateSell, removeSell } = useSellActions()
   const [visible, setVisible] = useState(false)
@@ -67,7 +67,7 @@ export default function SellsScreen()
             }}
             defaultValue={{
               id: sells.at(selected)?.id ?? '',
-              product_id: sells.at(selected)?.product_id ?? '',
+              product_id: sells.at(selected)?.product_id?.toString() ?? '',
               quantity: String(sells.at(selected)?.quantity),
               timestamp: sells.at(selected)?.timestamp ?? 0,
               sell_at: sells.at(selected)?.sell_at
