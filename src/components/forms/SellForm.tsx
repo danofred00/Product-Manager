@@ -1,5 +1,5 @@
-import { Delivery, Sell } from "@/types"
-import { deliverySchema, sellSchema } from "@/types/schemas"
+import { Sell } from "@/types"
+import { sellSchema } from "@/types/schemas"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import { StyleSheet, View } from "react-native"
@@ -10,7 +10,7 @@ import {Picker} from "@react-native-picker/picker"
 import { useStore } from "@/hooks/useStore"
 import { ReactNode, useEffect, useState } from "react"
 
-export type SellFormProps = {
+export type SalesFormProps = {
     defaultValue?: Sell,
     onValidate: (data: Sell) => void,
     title?: string,
@@ -18,7 +18,7 @@ export type SellFormProps = {
     cancelButton?: ReactNode
 }
 
-export default function SellForm({defaultValue, onValidate, title, actionText, cancelButton}: SellFormProps)
+export default function SellForm({defaultValue, onValidate, title, actionText, cancelButton}: SalesFormProps)
 {
     const {products} = useStore()
     const [selectedProduct, setSelectedProduct] = useState<string>(defaultValue?.id || '1')

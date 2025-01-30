@@ -7,7 +7,7 @@ export const kColorSize = 50
 
 export const kColorPickerCount = Math.floor((Dimensions.get("window").width / kColorSize) * 1.75) - 2 ;
 
-export const kDebug = process.env.EXPO_PUBLIC_DEBUG_MODE
+export const kDebug = process.env.EXPO_PUBLIC_DEBUG_MODE === 'true'
 
 export const kDatabaseName = 'database.sqlite'
 

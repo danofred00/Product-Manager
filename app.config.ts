@@ -7,6 +7,7 @@ export default function ({ config }: ConfigContext): ExpoConfig {
     "slug": "product_manager",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "danofred00",
     "icon": "./src/assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
@@ -42,6 +43,11 @@ export default function ({ config }: ConfigContext): ExpoConfig {
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        projectId: "8c3459bd-ea35-490d-9d1a-97905c0dd69b"
+      }
     }
   }
 }

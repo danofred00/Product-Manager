@@ -16,7 +16,7 @@ export default function SalesScreen()
   const [visible, setVisible] = useState(false)
   const [editFormVisible, showEditForm] = useState(false)
   const [selected, setSelected] = useState<number>(0)
-  const sellsFiltered = [...sells].sort((a, b) => b.timestamp - a.timestamp)
+  const salesFiltered = [...sells].sort((a, b) => b.timestamp - a.timestamp)
 
   return (
     <Container>
@@ -29,9 +29,9 @@ export default function SalesScreen()
       </View>
       <View>
         <SellList 
-          sells={sellsFiltered} 
-          onPress={(sell) => {
-            setSelected(sells.indexOf(sell))
+          sells={salesFiltered} 
+          onPress={(sale) => {
+            setSelected(sells.indexOf(sale))
             showEditForm(true)
           }} 
         />

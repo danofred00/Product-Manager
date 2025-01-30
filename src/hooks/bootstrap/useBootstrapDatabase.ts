@@ -11,7 +11,7 @@ export default function useBootstrapDatabase()
 
     const setup = useCallback(async (isFirstRun: boolean) => {
         console.log('[useBootstrapDatabase] Bootstraping database')
-
+        
         if(!isFirstRun && kDebug) {
             await DBService.dropTables(db)
         }        
