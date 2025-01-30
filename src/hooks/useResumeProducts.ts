@@ -32,16 +32,17 @@ export function useResumeProducts(options: ResumeProductsOptions)
             const rests = allSales['rests'] ?? []
             const sales = allSales['sales'] ?? []
             
-            const hasSales = sales.length >= 0
-            const hasRests = rests.length >= 0
+            const hasSales = sales.length > 0
+            const hasRests = rests.length > 0
 
             const received = statService.calculateReceived(id, deliveries)
-            sale = statService.calculateSale(id, sales)
 
             // if the rest value is detected, use it received as sale if there's no sales
             if(hasRests) {
-                const rest = statService.calculateRest(id, sales)
+                const rest = statService.calculateRest(id, rests)
                 if(!hasSales) { sale = received - rest } 
+            } else if(hasSales) {
+                sale = statService.calculateSale(id, sales)
             }
             
             // calculate in stock
