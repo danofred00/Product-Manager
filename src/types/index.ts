@@ -1,5 +1,5 @@
 import { InferType } from 'yup'
-import { deliverySchema, productSchema, sellSchema, userSchema } from "./schemas"
+import { deliverySchema, productSchema, saleSchema, userSchema } from "./schemas"
 
 export type IdType = number|string|undefined
 
@@ -29,14 +29,15 @@ export type DeliveryProduct = Product & {
     delivery_at: string
 }
 
-export type Sell = InferType<typeof sellSchema> & {
+export type Sale = InferType<typeof saleSchema> & {
     timestamp: number,
 }
 
-export type SellProduct = Product & {
+export type SaleProduct = Product & {
     quantity: number,
     product_id: IdType,
-    sell_at: string
+    sale_at: string,
+    is_rest?: boolean
 }
 
 export type Tag = {

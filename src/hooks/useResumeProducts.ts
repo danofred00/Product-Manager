@@ -1,11 +1,11 @@
 import { ProductStatsService } from "@/services/productstats.service";
-import { Delivery, Product, ProductState, Sell } from "@/types";
+import { Delivery, Product, ProductState, Sale } from "@/types";
 import { useMemo, useState } from "react";
 
 export type ResumeProductsOptions = {
     products: Product[],
     deliveries: Delivery[],
-    sales: Sell[]
+    sales: Sale[]
 }
 
 export function useResumeProducts(options: ResumeProductsOptions)
@@ -21,7 +21,14 @@ export function useResumeProducts(options: ResumeProductsOptions)
         for(const product of products.filter((p) => p.state === ProductState.AVALIABLE)) {
 
             const received = statService.calculateReceived(product.id, deliveries)
-            const sale = statService.calculateSale(product.id, sales)
+            let sale = statService.calculateSale(product.id, sales)
+            const rest  = statService.calculateRest(product.id, sales)
+
+            // update the sale values
+            if(rest) {
+                sale = received - rest
+            }
+            // calculate in stock
             const inStock = received - sale
             // add a product
             result.push({...product, inStock, sale, received})

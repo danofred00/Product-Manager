@@ -9,23 +9,21 @@ import { fullname } from '@/lib/utils';
 import UserAvatar from '@/components/UserAvatar';
 import InputSearch from '@/components/InputSearch';
 import useAccountActions from '@/hooks/actions/useAccountActions';
-import { useStore } from '@/hooks/useStore';
-import { useResumeProducts } from '@/hooks/useResumeProducts';
 import InStockProductList from '@/components/products/InStockProductList';
 import { useRouter } from 'expo-router';
 import Section from '@/components/Section';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDeliveryProductContext } from '@/components/contexts/DeliveryProductsContext';
 
 const HomePage = () => {
 
-  const {products: productsDb, sells, deliveries} = useStore()
   const [filter, setFilter] = useState<string>('')
   const {user} = useAccountActions()
-  const {products, totalSales, estimatedTotal} = useResumeProducts({deliveries, sales: sells, products: productsDb})
+  const {products, totalSales, estimatedTotal} = useDeliveryProductContext()
   const productFiltered = useMemo(() => {
     return products.filter(({name}) => {
       return name.toLowerCase().includes(filter.toLowerCase())
-    }).sort((a, b) => b.sale - a.sale)
+    }).filter(p => p.received).sort((a, b) => b.sale - a.sale)
   }, [products, filter])
   const router = useRouter()
 

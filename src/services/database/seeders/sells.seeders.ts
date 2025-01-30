@@ -1,28 +1,31 @@
 import { SQLiteDatabase } from "expo-sqlite";
-import { SellRepository } from "../repositories/sells.repository";
-import { Sell } from "@/types";
+import { SaleRepository } from "../repositories/sells.repository";
+import { Sale } from "@/types";
 
-const sells: Sell[] = [
+const sells: Sale[] = [
     {
       id: '1',
       timestamp: Date.now() - 1000,
       product_id: '1',
-      quantity: '25',
-      sell_at: '10h',
+      quantity: '1',
+      sale_at: '10h',
+      is_rest: false
     },
     {
       id: '2',
       timestamp: Date.now() - 100,
       product_id: '4',
-      quantity: '50',
-      sell_at: '12h25',
+      quantity: '1',
+      sale_at: '12h25',
+      is_rest: false
     },
     {
         id: '3',
         timestamp: Date.now(),
         product_id: '3',
-        quantity: '2',
-        sell_at: '15h',
+        quantity: '1',
+        sale_at: '15h',
+        is_rest: true
       },
   ]
 
@@ -32,9 +35,8 @@ export class SellSeeder
     {
         for (const sell of sells)
         {
-            SellRepository.create(sell)
+            SaleRepository.create(sell)
         }
-
         console.log('[SellSeeder::run] Sells seeded')
     }
 }

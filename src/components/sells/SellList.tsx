@@ -1,9 +1,9 @@
-import { SellProduct } from "@/types";
+import { SaleProduct } from "@/types";
 import { StyleSheet, View } from "react-native";
 import SellView from "./SellView";
 
 export type SellListProps = {
-    sells: SellProduct[],
+    sells: SaleProduct[],
     onPress: (data: any) => void | Promise<void>
 }
 
@@ -11,9 +11,9 @@ export default function SellList({sells, onPress}: SellListProps)
 {
     return (
         <View style={styles.container}>
-            {sells.map((sell, index) => {
+            {sells.map((sale, index) => {
                 return (
-                    <SellView key={index} sell={sell} onPress={onPress}  />
+                    <SellView key={index} sale={sale} onPress={onPress}  />
                 )
             })}
         </View>

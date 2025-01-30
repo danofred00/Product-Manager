@@ -1,25 +1,25 @@
-import { SellRepository } from "@/services/database/repositories/sells.repository";
-import { Sell } from "@/types";
+import { SaleRepository } from "@/services/database/repositories/sells.repository";
+import { Sale } from "@/types";
 
 export class SellService {
 
     static async getAll() {
-        return SellRepository.getAll()
+        return SaleRepository.getAll()
     }
 
     static async get(id: string|number) {
-        return SellRepository.get(String(id))
+        return SaleRepository.get(String(id))
     }
 
-    static async create(sell: Sell) {
-        return SellRepository.create(sell)
+    static async create(sell: Sale) {
+        return SaleRepository.create(sell)
     }
 
-    static async update(id: string|number, sell: Sell) {
-        return SellRepository.update(String(id), sell)
+    static async update(id: string|number, sell: Sale) {
+        return SaleRepository.update(String(id), sell)
     }
 
     static async delete(id: string|number) {    
-        return SellRepository.delete(String(id))
+        return SaleRepository.delete(String(id))
     }
 }

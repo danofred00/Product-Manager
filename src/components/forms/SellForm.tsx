@@ -1,5 +1,5 @@
-import { Sell } from "@/types"
-import { sellSchema } from "@/types/schemas"
+import { Sale } from "@/types"
+import { saleSchema } from "@/types/schemas"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import { StyleSheet, View } from "react-native"
@@ -7,12 +7,13 @@ import { Button, InputForm } from "../inputs"
 import { InferType } from "yup"
 import { ThemedText } from "../ThemedText"
 import {Picker} from "@react-native-picker/picker"
-import { useStore } from "@/hooks/useStore"
 import { ReactNode, useEffect, useState } from "react"
+import Switch from "../inputs/Switch"
+import { useDeliveryProductContext } from "../contexts/DeliveryProductsContext"
 
 export type SalesFormProps = {
-    defaultValue?: Sell,
-    onValidate: (data: Sell) => void,
+    defaultValue?: Sale,
+    onValidate: (data: Sale) => void,
     title?: string,
     actionText: string,
     cancelButton?: ReactNode
@@ -20,15 +21,16 @@ export type SalesFormProps = {
 
 export default function SellForm({defaultValue, onValidate, title, actionText, cancelButton}: SalesFormProps)
 {
-    const {products} = useStore()
+    const {products} = useDeliveryProductContext()
     const [selectedProduct, setSelectedProduct] = useState<string>(defaultValue?.id || '1')
 
     const { handleSubmit, control, setValue } = useForm({
-        resolver: yupResolver(sellSchema),
+        resolver: yupResolver(saleSchema),
         defaultValues: {
             id: defaultValue?.id || "",
             product_id: defaultValue?.product_id || "",
-            quantity: defaultValue?.quantity || ""
+            quantity: defaultValue?.quantity || "",
+            is_rest: !!defaultValue?.is_rest
         }
     })
 
@@ -36,7 +38,7 @@ export default function SellForm({defaultValue, onValidate, title, actionText, c
         setValue('product_id', selectedProduct)
     }, [selectedProduct])
 
-    const submit = (data: InferType<typeof sellSchema>) => {
+    const submit = (data: InferType<typeof saleSchema>) => {
         onValidate({
             ...data,
             timestamp: Date.now()
@@ -50,13 +52,20 @@ export default function SellForm({defaultValue, onValidate, title, actionText, c
                 <View>
                     <ThemedText type="defaultSemiBold">Choisir le produit livre : </ThemedText>
                     <Picker selectionColor='#000' selectedValue={selectedProduct} onValueChange={(value) => setSelectedProduct(value)}>
-                        {products.map((p, index) => {
+                        {products.filter(p => p.received).map((p, index) => {
                             return (
                                 <Picker.Item key={index} value={p.id} label={`${p.name} - ${p.price} XAF`} />
                             )
                         })}
                     </Picker>
                 </View>
+
+                <Switch 
+                    control={control}
+                    label="Qte restante "
+                    name="is_rest"
+                    defaultValue={defaultValue?.is_rest}
+                />
 
                 <InputForm
                     name="quantity"
@@ -67,11 +76,11 @@ export default function SellForm({defaultValue, onValidate, title, actionText, c
                 />
 
                 <InputForm
-                    name="sell_at"
+                    name="sale_at"
                     control={control}
                     label="Heure de vente (Optionel)"
                     placeholder="Ex: 11 h 30"
-                    defaultValue={defaultValue?.sell_at || undefined}
+                    defaultValue={defaultValue?.sale_at || undefined}
                 />
 
                 <View style={{flexDirection: 'row', gap: 10}}>

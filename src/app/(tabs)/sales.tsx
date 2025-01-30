@@ -70,7 +70,8 @@ export default function SalesScreen()
               product_id: sells.at(selected)?.product_id?.toString() ?? '',
               quantity: String(sells.at(selected)?.quantity),
               timestamp: sells.at(selected)?.timestamp ?? 0,
-              sell_at: sells.at(selected)?.sell_at
+              sale_at: sells.at(selected)?.sale_at,
+              is_rest: sells.at(selected)?.is_rest ?? false
             }}
             cancelButton={
               <Button 

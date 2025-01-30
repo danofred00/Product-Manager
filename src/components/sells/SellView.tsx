@@ -1,27 +1,30 @@
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SellProduct } from "@/types";
+import { SaleProduct } from "@/types";
 import { Image } from "expo-image";
 
 export type SellProps = {
-    sell: SellProduct,
+    sale: SaleProduct,
     onPress: (data: any) => void | Promise<void>
 }
 
-export default function SellView({sell, onPress}: SellProps)
+export default function SellView({sale, onPress}: SellProps)
 {
     return (
-        <TouchableOpacity style={[styles.container]} activeOpacity={0.85} onPress={() => onPress(sell as typeof sell)}>
+        <TouchableOpacity style={[styles.container]} activeOpacity={0.85} onPress={() => onPress(sale as typeof sale)}>
             <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}} >
-                <Image source={{uri: sell.image}} style={styles.image} contentFit="fill"/>
+                <Image source={{uri: sale.image}} style={styles.image} contentFit="fill"/>
                 <View>
-                    <Text style={styles.productName}>{sell.name}</Text>
-                    <Text style={styles.productAmount}>Prix : {sell.price} XAF</Text>
-                    <Text style={styles.productAmount}>Vendu a : {sell.sell_at || 'NULL'}</Text>
+                    <Text style={styles.productName}>{sale.name}</Text>
+                    <Text style={styles.productAmount}>Prix : {sale.price} XAF</Text>
+                    { sale.is_rest ? 
+                        <Text style={[styles.stockText, {backgroundColor: 'lightgreen'}]}>Reste</Text> : 
+                        <Text style={[styles.stockText, styles.productAmount, {backgroundColor: 'yellow'}]}>Vendu a : {sale.sale_at || 'NULL'}</Text>
+                    }
                 </View>
             </View>
             <View>
                 <Text style={styles.stockText}>Quantite</Text>
-                <Text style={styles.stock}>{sell.quantity}</Text>
+                <Text style={styles.stock}>{sale.quantity}</Text>
             </View>
         </TouchableOpacity>
     )

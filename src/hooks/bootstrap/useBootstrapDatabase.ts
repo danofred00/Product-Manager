@@ -11,16 +11,17 @@ export default function useBootstrapDatabase()
 
     const setup = useCallback(async (isFirstRun: boolean) => {
         console.log('[useBootstrapDatabase] Bootstraping database')
-        
-        if(!isFirstRun && kDebug) {
-            await DBService.dropTables(db)
-        }        
-        await DatabaseRepository.init(db)
-        await DBService.createTables(db)
 
-        if(kDebug) {
+        // if(!isFirstRun && kDebug) {
+        //     await DBService.dropTables(db)
+        // } 
+        
+        await DatabaseRepository.init(db)
+
+        if(isFirstRun && kDebug){
             await DatabaseSeeder.run(db)
-        }
+        } 
+        
     }, [])
 
     return {

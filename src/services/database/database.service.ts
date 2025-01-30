@@ -4,52 +4,17 @@ import { SQLiteDatabase} from 'expo-sqlite'
 export class DBService
 {
 
-    static async createTables(db: SQLiteDatabase)
-    {
-        await this.createBillsTable(db)
-    }
-
-    private static async createBillsTable(db: SQLiteDatabase)
-    {
-        console.log('[DBService::createTables] Creating bills table')
-
-        const billsQuery = `
-            CREATE TABLE IF NOT EXISTS bills(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp INTEGER DEFAULT 0
-            )
-        `
-
-        const billsProductQuery = `
-            CREATE TABLE IF NOT EXISTS bills_products(
-                bill_id INTEGER NOT NULL,
-                product_id INTEGER NOT NULL,
-                quantity INTEGER DEFAULT 0,
-                FOREIGN KEY(bill_id) REFERENCES bills(id),
-                FOREIGN KEY(product_id) REFERENCES products(id)
-            )
-        `
-
-        await db.execAsync(billsQuery)
-
-        console.log('[DBService::createTables] Creating bills_products table')
-        await db.execAsync(billsProductQuery)
-
-        console.log('[DBService::createTables] Done.')
-    }
-
+    static async createTables(db: SQLiteDatabase) {}
+    
     static async dropTables(db: SQLiteDatabase)
     {
         console.log('[DBService::dropTables] Dropping tables')
 
         const tables = [
-            'sells_products', 
-            'bills_products', 
             'products', 
             'users', 
             'deliveries', 
-            'bills',
-            'sells'
+            'sales'
         ]
 
         const query = `

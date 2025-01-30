@@ -1,18 +1,18 @@
-import { SellProduct } from "@/types";
+import { SaleProduct } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: SellProduct[] = []
+const initialState: SaleProduct[] = []
 
 const sellsSlice = createSlice({
     name: 'sells',
     initialState: initialState,
     reducers: {
         setSells: (_, action) => {
-            return action.payload as SellProduct[]
+            return action.payload as SaleProduct[]
         },
 
         addSell: (state, action) => {
-            return [...state, action.payload as SellProduct]
+            return [...state, action.payload as SaleProduct]
         },
         
         removeSell: (state, action) => {

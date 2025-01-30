@@ -1,4 +1,4 @@
-import { Delivery, Product, Sell } from "@/types";
+import { Product } from "@/types";
 import { useMemo } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { ThemedText } from "./ThemedText";

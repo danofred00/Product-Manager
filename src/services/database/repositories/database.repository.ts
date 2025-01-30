@@ -1,7 +1,7 @@
 import { SQLiteDatabase } from "expo-sqlite";
 import { ProductRepository } from "./products.repository";
 import { DeliveryRepository } from "./deliveries.repository";
-import { SellRepository } from "./sells.repository";
+import { SaleRepository } from "./sells.repository";
 
 export class DatabaseRepository
 {
@@ -9,6 +9,6 @@ export class DatabaseRepository
     {
         await ProductRepository.init(db)
         await DeliveryRepository.init(db)
-        await SellRepository.init(db)
+        await SaleRepository.init(db)
     }
 }

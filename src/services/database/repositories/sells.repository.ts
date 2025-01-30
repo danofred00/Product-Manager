@@ -1,7 +1,7 @@
-import { Sell, SellProduct } from "@/types";
+import { Sale, SaleProduct } from "@/types";
 import { SQLiteDatabase } from "expo-sqlite";
 
-export class SellRepository
+export class SaleRepository
 {
     private static db: SQLiteDatabase
 
@@ -13,16 +13,17 @@ export class SellRepository
 
     static async getAll()
     {
-        const deliveries: SellProduct[] = []
+        const deliveries: SaleProduct[] = []
 
         const rows = await this.db.getAllAsync(
-            'SELECT * FROM sells INNER JOIN products ON sells.product_id = products.id'
+            'SELECT * FROM sales INNER JOIN products ON sales.product_id = products.id'
         )
-
-        for (const row of rows as SellProduct[])
+        
+        for (const row of rows as SaleProduct[])
         {
             deliveries.push({
                 ...row,
+                is_rest: !!row.is_rest,
                 product_id: String(row.product_id),
                 id: String(row.id),
                 description: row.description ?? undefined
@@ -32,56 +33,57 @@ export class SellRepository
         return deliveries
     }
 
-    static async get(id: string): Promise<SellProduct|null>
+    static async get(id: string): Promise<SaleProduct|null>
     {
-        return await this.db.getFirstAsync<SellProduct>(
-            'SELECT * FROM sells INNER JOIN products ON sells.product_id = products.id WHERE sells.id = ?', [id]
+        return await this.db.getFirstAsync<SaleProduct>(
+            'SELECT * FROM sales INNER JOIN products ON sales.product_id = products.id WHERE sales.id = ?', [id]
         )
 
     }
 
-    static async create(sell: Sell): Promise<SellProduct>
+    static async create(sale: Sale): Promise<SaleProduct>
     {
-        const { product_id, quantity, timestamp, sell_at } = sell
+        const { product_id, quantity, timestamp, sale_at, is_rest } = sale
 
         const result = await this.db.runAsync(
-            'INSERT INTO sells (product_id, quantity, timestamp, sell_at) VALUES (?, ?, ?, ?)',
-            [product_id, quantity, timestamp, sell_at ?? '']
+            'INSERT INTO sales (product_id, quantity, timestamp, sale_at, is_rest) VALUES (?, ?, ?, ?, ?)',
+            [product_id, quantity, timestamp, sale_at ?? '', is_rest]
         )
         const data = await this.get(String(result.lastInsertRowId)) 
         if(data !== null) {
             data.id = String(data?.id)
         }
-        return data as SellProduct
+        return data as SaleProduct
     }
 
-    static async update(id:string, sell: Sell): Promise<Sell>
+    static async update(id:string, sale: Sale): Promise<Sale>
     {
-        const { product_id, quantity, timestamp, sell_at } = sell
+        const { product_id, quantity, timestamp, sale_at, is_rest } = sale
 
         await this.db.runAsync(
-            'UPDATE sells SET product_id = ?, quantity = ?, timestamp = ?, sell_at = ? WHERE id = ?',
-            [product_id, quantity, timestamp, sell_at ?? '', id]
+            'UPDATE sales SET product_id = ?, quantity = ?, timestamp = ?, sale_at = ?, is_rest = ? WHERE id = ?',
+            [product_id, quantity, timestamp, sale_at ?? '', is_rest, id]
         )
 
-        return sell
+        return sale
     }
 
     static async delete(id: string): Promise<void>
     {
-        return this.db.execAsync(`DELETE FROM sells WHERE id = ${id}`)
+        return this.db.execAsync(`DELETE FROM sales WHERE id = ${id}`)
     }
 
     static async createTable(db: SQLiteDatabase)
     {
-        console.log('[DBService::createTables] Creating sells table')
+        console.log('[DBService::createTables] Creating sales table')
 
         const query = `
-            CREATE TABLE IF NOT EXISTS sells(
+            CREATE TABLE IF NOT EXISTS sales(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 product_id TEXT NOT NULL,
                 quantity INTEGER DEFAULT 0,
-                sell_at TEXT DEFAULT '',
+                sale_at TEXT DEFAULT '',
+                is_rest INTEGER DEFAULT 0,
                 timestamp INTEGER DEFAULT 0,
                 FOREIGN KEY(product_id) REFERENCES products(id)
             )
