@@ -1,6 +1,7 @@
 import { Product } from "@/types"
 import { StyleSheet, View } from "react-native"
 import InStockProductCard from "./InStockProductCard"
+import { ThemedText } from "../ThemedText"
 
 export type InStockProductListProps = {
     products: Product[],
@@ -11,6 +12,14 @@ export default function InStockProductList({products, onPress}: InStockProductLi
 {
     return (
         <View style={[styles.container]}>
+            {products.length === 0 && (
+                <View style={{flex: 1}} >
+                    <ThemedText style={{textAlign: 'center'}}>
+                        Aucune livraison pour le moment. Allez dans la section {' '}
+                        <ThemedText type="defaultSemiBold" style={{fontStyle: 'italic'}}>Mes Livraisons</ThemedText> pour en rajouter
+                    </ThemedText>
+                </View>
+            )}
             {products.map((product, index) => {
                 return (
                     <InStockProductCard 
