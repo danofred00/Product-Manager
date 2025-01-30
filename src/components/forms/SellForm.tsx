@@ -9,7 +9,7 @@ import { ThemedText } from "../ThemedText"
 import {Picker} from "@react-native-picker/picker"
 import { ReactNode, useEffect, useState } from "react"
 import Switch from "../inputs/Switch"
-import { useDeliveryProductContext } from "../contexts/DeliveryProductsContext"
+import { useStore } from "@/hooks/useStore"
 
 export type SalesFormProps = {
     defaultValue?: Sale,
@@ -21,8 +21,8 @@ export type SalesFormProps = {
 
 export default function SellForm({defaultValue, onValidate, title, actionText, cancelButton}: SalesFormProps)
 {
-    const {products} = useDeliveryProductContext()
-    const [selectedProduct, setSelectedProduct] = useState<string>(defaultValue?.id || '1')
+    const {products} = useStore()
+    const [selectedProduct, setSelectedProduct] = useState<string>(defaultValue?. product_id ?? '1')
 
     const { handleSubmit, control, setValue } = useForm({
         resolver: yupResolver(saleSchema),
@@ -52,7 +52,7 @@ export default function SellForm({defaultValue, onValidate, title, actionText, c
                 <View>
                     <ThemedText type="defaultSemiBold">Choisir le produit livre : </ThemedText>
                     <Picker selectionColor='#000' selectedValue={selectedProduct} onValueChange={(value) => setSelectedProduct(value)}>
-                        {products.filter(p => p.received).map((p, index) => {
+                        {products.map((p, index) => {
                             return (
                                 <Picker.Item key={index} value={p.id} label={`${p.name} - ${p.price} XAF`} />
                             )
