@@ -16,6 +16,11 @@ export default function Layout()
                 headerShown: true, 
                 title: 'Rapport de vente'
             }} />
+
+            <Stack.Screen name="about" options={{
+                headerShown: true,
+                title: 'A Propos de l\'appli'
+            }} />
         </Stack>
     )
 }

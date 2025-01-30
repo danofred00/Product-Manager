@@ -1,121 +1,146 @@
 import Container from '@/components/Container';
-import ImagePicker from '@/components/ImagePicker';
-import { Button, InputForm } from '@/components/inputs';
+import { ThemedText } from '@/components/ThemedText';
 import UserAvatar from '@/components/UserAvatar';
+import { Colors } from '@/constants/Colors';
 import useAccountActions from '@/hooks/actions/useAccountActions';
-import { useStore } from '@/hooks/useStore';
-import { myAlert } from '@/lib/alert';
-import { userSchema } from '@/types/schemas';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { View, Text, StyleSheet, Platform, Alert } from 'react-native';
+import { fullname } from '@/lib/utils';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { ReactElement, useState } from 'react';
+import { Button, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-function SettingScreen ()
+const settings = [
+  {
+    title: 'Profil personel', 
+    description: 'Vos informations personnelles', 
+    icon: <MaterialIcons name='account-circle' size={25} color={'#000'} />,
+    url: '/settings/account'
+  },
+  {
+    title: 'Parametres d\'application', 
+    description: 'Modifiez les parametres de l\'appli', 
+    icon: <MaterialIcons name='settings' size={25} color={'#000'} />,
+    url: '/settings/application'
+  },
+  {
+    title: 'Aide', 
+    description: 'Obtenez de l\'aide dans l\'appli', 
+    icon: <MaterialIcons name='help-outline' size={25} color={'#000'} />,
+    url: '/settings/help'
+  },
+  {
+    title: 'A Propos', 
+    description: 'En savoir plus sur l\'application', 
+    icon: <MaterialIcons name='info-outline' size={25} color={'#000'} />,
+    url: '/about'
+  },
+]
+
+export default function SettingScreen()
 {
-  const {user, updateAccount} = useAccountActions()
-  const {control, handleSubmit} = useForm({
-    resolver: yupResolver(userSchema)
-  })
-  const [image, setImage] = useState(user.image)
+  const {user} = useAccountActions() 
+  const router = useRouter()
 
-  const updateProfile = async (data: any) => {
-    await updateAccount({...data, image}).then(() => {
-      myAlert({
-        title: "Mise a jour effectue",
-        message: "Votre profil a ete mis a jours avec success",
-        actionText: "Ok"
-      })
-    })
+  const openMyGithub = async () => {
+    Linking.openURL('https://github.com/danofred00')
   }
 
   return (
-    <Container>
-      <View style={{gap: 20}}>
-          <Text style={styles.text}>
-            Mettre à jour le profil
-          </Text>
-
-          <View style={{
-            alignItems: 'center',
-          }}>
-            <ImagePicker setImage={(image) => setImage(image ?? user.image)}>
-              <UserAvatar uri={image} size={150} radius={75} style={{padding: 3}}/>
-            </ImagePicker>
-          </View>
-          <View style={styles.form}>
-
-            <InputForm 
-              label='Nom' 
-              placeholder='Votre nom'
-              name='firstname'
-              control={control}
-              defaultValue={user.firstname}
-            />
-
-            <InputForm 
-              label='Prenom' 
-              placeholder='Votre prenom' 
-              name='lastname'
-              control={control}
-              defaultValue={user.lastname ?? ''}
-            />
-
-            <InputForm
-              label='Biographie (optional)' 
-              placeholder='Un petit texte pour vous decrire' 
-              name='description'
-              control={control}
-              defaultValue={user.description}
-            />
-
-          </View>
-          <View>
-            <Button title='Enregistrer'  onPress={handleSubmit(updateProfile)} />
-          </View>
+    <Container style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.avatarContainer}>
+          <UserAvatar uri={user.image} size={100} />
         </View>
-        <View style={styles.space} />
+        <ThemedText type='subtitle'>{fullname(user)}</ThemedText>
+      </View>
+      <View style={{}}>
+        {settings.map((setting, index) => {
+          return (
+            <Setting 
+              setting={setting} 
+              key={index} 
+              onPress={item => {
+                router.push({ pathname: setting.url })
+              }} 
+            />
+          )
+        })}
+      </View>
+      <View style={{backgroundColor: '#fff', padding: 10, borderRadius: 10, alignItems: 'center', gap: 5}}>
+        <View style={[{flexDirection: 'row', gap: 10}]}>
+          <ThemedText lightColor='gray' darkColor='gray' style={styles.centerText}>Made with ❤️ by</ThemedText> 
+          <TouchableOpacity activeOpacity={1} onPress={() => openMyGithub()}>
+            <ThemedText lightColor='#00f' darkColor='#00f' >Daniel Leussa</ThemedText>
+          </TouchableOpacity>
+        </View>
+      </View>
     </Container>
-  );
-};
+  )
+}
 
-const padding = 15
+type SettingProps<T extends SettingItem> = {
+  onPress: (item: T) => void,
+  setting: T,
+}
+
+type SettingItem = {
+  icon?: ReactElement,
+  title: string,
+  description?: string,
+  url: string 
+}
+
+function Setting<T extends SettingItem>({onPress, setting}: SettingProps<T>) {
+  const [touched, setTouched] = useState(false)
+  return (
+    <TouchableOpacity style={{
+      backgroundColor: touched ? '#fff8' : '#fff',
+      ...styles.setting
+    }} 
+    activeOpacity={1} 
+    onPressIn={() => setTouched(true)} 
+    onPressOut={() => setTouched(false)}
+    onPress={() => onPress(setting)}
+  >
+      {setting.icon}
+      <View style={{
+        flex: 1
+      }}>
+        <ThemedText type='defaultSemiBold'>{setting.title}</ThemedText>
+        {setting.description && <ThemedText>{setting.description}</ThemedText>}
+      </View>
+      <MaterialIcons name='chevron-right' size={25} />
+    </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
-  text: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 20
+  container: {},
+  header: {
+    gap: 10,
+    alignItems: 'center',
+    marginBottom: 10
   },
-  imageContainer: {
-    width: 150 + padding,
-    height: 150 + padding,
-    backgroundColor: '#dfdfdf',
-    borderRadius: 100,
+  avatarContainer: {
+    width: 'auto',
+    padding: 2,
+    backgroundColor: Colors.light.tabIconSelected,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    backgroundColor: '#dfdfdf'
-  },
-  form: {
-    flex: 1,
-    gap: 10
-  },
-  space: {
-    minHeight: Platform.OS === 'android' ? 50 : 10,
-    width: 100
-  },
-  success: {
-    color: '#fff',
-    backgroundColor: 'green',
-    textAlign: 'center',
-    fontSize: 11,
-    padding: 10
+  setting: {
+    flexDirection: 'row',
+    borderWidth: 0.2,
+    boxShadow: 'gray',
+    marginBottom: 10,
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 5
+  }, 
+  centerText: {
+    textAlign: 'center'
   }
-});
-
-export default SettingScreen;
+})

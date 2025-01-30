@@ -12,10 +12,6 @@ export default function useBootstrapDatabase()
     const setup = useCallback(async (isFirstRun: boolean) => {
         console.log('[useBootstrapDatabase] Bootstraping database')
 
-        // if(!isFirstRun && kDebug) {
-        //     await DBService.dropTables(db)
-        // } 
-        
         await DatabaseRepository.init(db)
 
         if(isFirstRun && kDebug){
@@ -24,8 +20,15 @@ export default function useBootstrapDatabase()
         
     }, [])
 
+    const uninstall = useCallback(async () => {
+        console.log("[useBootstrapDatabase::uninstall] Dropping tables")
+
+        await DBService.dropTables(db)
+    }, [])
+
     return {
         db,
-        setup
+        setup,
+        uninstall
     }
 }

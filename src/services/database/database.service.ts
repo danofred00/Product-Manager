@@ -12,7 +12,6 @@ export class DBService
 
         const tables = [
             'products', 
-            'users', 
             'deliveries', 
             'sales'
         ]

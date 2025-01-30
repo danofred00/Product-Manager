@@ -15,12 +15,12 @@ export type ButtonProps = RNButtonProps & {
     icon?: ReactNode
 }
 
-export default function Button({title, style, icon, ...props}: ButtonProps)
+export default function Button({title, style, icon, color = '#ffffff', ...props}: ButtonProps)
 {
     return (
         <TouchableOpacity style={[styles.container, style]} activeOpacity={0.8} {...props}>
             {icon}
-            <Text style={styles.text}>{title}</Text>
+            <Text style={[styles.text, {color}]}>{title}</Text>
         </TouchableOpacity>
     )
 }
