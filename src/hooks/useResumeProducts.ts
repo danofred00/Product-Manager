@@ -1,3 +1,4 @@
+import { groupBy } from "@/lib/utils";
 import { ProductStatsService } from "@/services/productstats.service";
 import { Delivery, Product, ProductState, Sale } from "@/types";
 import { useMemo, useState } from "react";
@@ -17,17 +18,32 @@ export function useResumeProducts(options: ResumeProductsOptions)
         let totalSales = 0
         let estimatedTotal = 0
         const statService = new ProductStatsService()
+        const selector = (item: Delivery|Sale) => item.product_id
+        const groupedDeliveries = groupBy(deliveries, selector)
+        const groupedSales = groupBy(sales, selector)
+        
 
-        for(const product of products.filter((p) => p.state === ProductState.AVALIABLE)) {
+        for(const {id, ...product} of products.filter((p) => p.state === ProductState.AVALIABLE)) {
 
-            const received = statService.calculateReceived(product.id, deliveries)
-            let sale = statService.calculateSale(product.id, sales)
-            const rest  = statService.calculateRest(product.id, sales)
+            let sale = 0
 
-            // update the sale values
-            if(rest) {
-                sale = received - rest
+            const deliveries = groupedDeliveries[id ?? ''] ?? []
+            const allSales = groupBy(groupedSales[id ?? ''] ?? [], item => item.is_rest ? 'rests': 'sales')
+            const rests = allSales['rests'] ?? []
+            const sales = allSales['sales'] ?? []
+            
+            const hasSales = sales.length >= 0
+            const hasRests = rests.length >= 0
+
+            const received = statService.calculateReceived(id, deliveries)
+            sale = statService.calculateSale(id, sales)
+
+            // if the rest value is detected, use it received as sale if there's no sales
+            if(hasRests) {
+                const rest = statService.calculateRest(id, sales)
+                if(!hasSales) { sale = received - rest } 
             }
+            
             // calculate in stock
             const inStock = received - sale
             // add a product
